@@ -10,11 +10,20 @@ export default {};
 
 <style lang="less" scoped>
 h1 {
-  font-family: monospace;
-  font-style: inherit;
-  transform: translateY(-50%) translateX(-50%);
-  position: absolute;
-  top: 50%;
-  left: 50%;
+ font-family: monospace;
+    font-style: inherit;
+    transform: translateY(-50%);
+    margin: 30vh 0 10vh 0;
+}
+
+@media screen and (max-height: 600px){
+    h1{
+        transform: translateY(-50%);
+    }
+}
+@media screen and (max-width: 520px){
+    h1{
+       font-size: 15px
+    }
 }
 </style>

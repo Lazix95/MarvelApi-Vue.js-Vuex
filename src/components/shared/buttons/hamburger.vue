@@ -21,9 +21,9 @@ export default {
 <style lang="less">
 @hamburger-padding-x: 15px;
 @hamburgerPaddingY: 15px;
-@hamburger-layer-width: 30px;
+@hamburger-layer-width: 25px;
 @hamburger-layer-height: 4px;
-@hamburger-layer-spacing: 6px;
+@hamburger-layer-spacing: 5px;
 @hamburger-layer-color: #000000;
 @hamburger-layer-border-radius: 4px;
 @hamburger-hover-opacity: 0.7;

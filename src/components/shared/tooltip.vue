@@ -30,6 +30,8 @@ export default {
   padding: 5px 5px;
   border-radius: 10px;
   margin: 0;
+  opacity: 1;
+  text-align: center;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 12px;

@@ -1,7 +1,7 @@
 <template>
-    <div class="modal" ref="modal" @click="closeModal()">
-        <div class="modalContent" :style="{backgroundImage:'url('+src+')' }">
-          <span class="close" @click="closeModal()">&#935;</span>
+    <div class="modal" ref="modal" @click="$store.commit('closeModal')">
+        <div class="modalContent" :class="modalData.class" :style="{backgroundImage:'url('+src+')' }">
+          <span class="close" aria-hidden="true">&times;</span>
             <div v-touch:swipe.left="nextHero" v-touch:swipe.right="perviusHero" class="textContent" ref="hero">
                  <h2>{{ modalData.name }}</h2>
                  <p>{{ description }}</p>
@@ -23,17 +23,14 @@ import { EventBus } from "./../../main.js";
 export default {
   data: function() {
     return {
-      data: "",
       mobile: false
     };
   },
-  props: {
-    modalData: Object,
-    closeModal: Function,
-    nextHero: Function,
-    perviusHero: Function
-  },
+  
   computed: {
+     modalData: function(){
+      return this.$store.getters.getModalData;
+    },
     src: function() {
       return (
         this.modalData.thumbnail.path + "." + this.modalData.thumbnail.extension
@@ -68,9 +65,9 @@ export default {
   methods: {
     keyPress: function(event) {
       if (event.keyCode == 37) {
-        this.perviusHero();
+        this.perviusHero()
       } else if (event.keyCode == 39) {
-        this.nextHero();
+        this.nextHero()
       }
     },
     mobileFnc: function() {
@@ -80,8 +77,14 @@ export default {
       } else {
         this.mobile = false;
       }
-    }
+    },
+    nextHero:function(){
+    this.$store.dispatch('nextHero')
+  },
+  perviusHero:function(){
+    this.$store.dispatch('perviusHero')
   }
+  },
 };
 </script>
 
@@ -94,6 +97,7 @@ export default {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 15;
+  display: block;
   > .modalContent {
     box-shadow: 10px 10px 69px -2px rgba(0, 0, 0, 0.75);
     border-radius: 20px;
@@ -102,17 +106,16 @@ export default {
     width: 500px;
     height: 500px;
     max-width: 100%;
-    max-width: 100%;
+    max-height: 100%;
     top: 50%;
     left: 50%;
     background-color: aqua;
     text-align: center;
     background-position-x: center;
-    background-size: 100% 100%;
     background-size: cover;
     > .close {
       margin: 17px 30px 0 0;
-      font-size: 20px;
+      font-size: 25px;
       color: #9b9494;
       cursor: pointer;
       z-index: 999;
@@ -124,7 +127,7 @@ export default {
       height: 100%;
       border-radius: 20px;
       box-sizing: border-box;
-      padding: 0 15% 15px 15%;
+      padding: 40px 15% 15px 15%;
       background: rgba(0, 0, 0, 0.4);
       color: white;
       position: absolute;
@@ -177,5 +180,8 @@ export default {
       width: 50px;
     }
   }
+.imageNotFound{
+      background-size: 100% 100%;
+}
 }
 </style>

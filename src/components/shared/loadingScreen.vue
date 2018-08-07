@@ -17,6 +17,12 @@ svg {
   left: 50%;
   top: 50%;
 }
+
+@media screen and (max-height: 600px){
+    svg {
+  transform: translateX(-50%) translateY(-20%);
+}
+}
 </style>
 
 
