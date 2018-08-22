@@ -7,10 +7,11 @@
     </div>
     <transition name="fade">
       <div class="navbarHolder" v-if="!mobile && mobileNavActive">
+       <app-nav-links></app-nav-links>
         <nav class="navbar">
-          <allHeroesButton v-if="!viewAllHeroes" @click.native="$store.dispatch('setViewAllHeroes', true); name = ''"></allHeroesButton>
-            <bookmarked-heroes-button v-else @click.native="$store.dispatch('setViewAllHeroes', false)" ></bookmarked-heroes-button>
-            <input type="text" placeholder="Search Heroes!" id="js-search" value="" v-model="name" @focus="$store.state.offset = 0">
+          <img src="./../../assets/marvelLogo.png" class="logo" v-if="!viewBookmarked">
+            <bookmarked-heroes-button v-if="viewBookmarked" @click.native="$store.commit('setViewBookmarked', false)" ></bookmarked-heroes-button>
+            <input type="text" placeholder="Search Heroes!" id="js-search" value="" v-model="name" @input="$store.commit('setOffset',0)">
           </nav>
       </div>
     </transition>
@@ -21,6 +22,7 @@
 import allHerosButton from "./buttons/ShowAllHeroes.vue";
 import bookmarkedHeroesButton from "./buttons/showBookmarkedHeroes.vue";
 import hamburger from "./buttons/hamburger";
+import navLinks from './buttons/navLinks'
 
 export default {
   data: function() {
@@ -38,8 +40,8 @@ export default {
         return false;
       }
     },
-    viewAllHeroes: function() {
-      return this.$store.getters.getViewAllHeroes;
+    viewBookmarked: function() {
+      return this.$store.getters.getViewBookmarked;
     }
   },
   methods: {
@@ -58,16 +60,19 @@ export default {
     name() {
       this.$store.commit("nameStartsWith", this.name);
       this.$store.commit("setOffset", 0)
+      this.$store.commit("setViewBookmarked", false)
       this.$store.dispatch("search");
     }
   },
   created() {
     window.addEventListener("resize", this.mobileFnc, true);
+    this.mobileFnc()
   },
   components: {
     allHeroesButton: allHerosButton,
     bookmarkedHeroesButton: bookmarkedHeroesButton,
-    appHamburger: hamburger
+    appHamburger: hamburger,
+    appNavLinks:navLinks
   }
 };
 </script>
@@ -85,7 +90,7 @@ export default {
     transition: all 0.8s;
   }
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+.fade-enter, .fade-leave-to{
   max-height: 0;
 }
 
@@ -98,11 +103,11 @@ header {
   > h2 {
     position: absolute;
     z-index: 5;
-    transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-75%) translateY(-50%);
     left: 50%;
     top: 50%;
     margin: 0;
-    font-size: 29px;
+    font-size: 25px;
   }
   > .navBurger {
     position: absolute;
@@ -125,6 +130,10 @@ header {
     overflow: auto;
     text-align: center;
     position: relative;
+    >img{
+      width: 155px;
+      height: 30px;
+    }
     > input {
       padding: 5px 10px;
       border: none;

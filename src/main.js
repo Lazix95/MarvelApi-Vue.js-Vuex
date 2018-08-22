@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import App from './App.vue';
+import VueResource from 'vue-resource';
 import VueLocalStorage from 'vue-localstorage';
 import Vue2TouchEvents from 'vue2-touch-events';
+import Vuelidate from 'vuelidate'
 import {
   store
 } from './store/store';
@@ -12,22 +14,21 @@ import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueRouter from 'vue-router';
-import VueResource from 'vue-resource';
 
+Vue.use(VueResource);
 Vue.use(VueLocalStorage);
 Vue.use(Vue2TouchEvents);
+Vue.use(Vuelidate);
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
-Vue.use(VueResource);
+
 
 export const router = new VueRouter({
   routes
 })
 
 router.beforeEach((to, from, next) => {
-  if (
-    to.params.number <= 0 ||
-    !Number.isInteger(parseInt(to.params.number))
+  if ((to.params.number <= 0 || !Number.isInteger(parseInt(to.params.number)) && to.path.split("/")[1] == "page" )
   ) {
     next(false)
   } else {
@@ -39,5 +40,5 @@ new Vue({
   el: '#app',
   store,
   router,
-  render: h => h(App)
+  render: h => h(App),
 });

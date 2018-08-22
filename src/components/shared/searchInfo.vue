@@ -1,29 +1,43 @@
 <template>
-    <div>
-        <h1>There is no result for " <slot></slot> "</h1>
-    </div>
+<div>
+    <h2 class="info"><p>There is no result</p> <br>
+        <p>
+            for " <slot></slot> "
+        </p> 
+        <br>
+        <p v-if="page>1">On page {{ page }} </p>
+    </h2>
+</div>
 </template>
 
 <script>
-export default {};
+export default {
+    computed: {
+        page: function () {
+            return this.$route.params.number;
+        }
+    }
+};
 </script>
 
 <style lang="less" scoped>
-h1 {
- font-family: monospace;
+.info {
+    font-family: monospace;
     font-style: inherit;
     transform: translateY(-50%);
-    margin: 30vh 0 10vh 0;
+    margin: 30vh 0 0 0;
+    font-size: 25px;
 }
 
-@media screen and (max-height: 600px){
-    h1{
-        transform: translateY(-50%);
+p { font-family: monospace;
+    font-style: inherit;
+    font-size: 25px;
+    display: inline-block;
     }
-}
-@media screen and (max-width: 520px){
-    h1{
-       font-size: 15px
+
+@media screen and (max-width: 520px) {
+    p {
+        font-size: 15px;
     }
 }
 </style>

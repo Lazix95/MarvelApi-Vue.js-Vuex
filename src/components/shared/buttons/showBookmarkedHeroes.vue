@@ -1,7 +1,7 @@
 <template>
-    <button>
+    <button class="btn btn-success">
       <img src="./../../../assets/img/full star.png">
-      <p>Veiw your bookmarked heroes!!</p>
+      <p>Veiw your heroes!!</p>
       </button>
 </template>
 
@@ -13,9 +13,8 @@ export default {};
 button {
   position: absolute;
   left: 10px;
-  top: 10px;
+  top: 5px;
   border-radius: 10px;
-  background: transparent;
   cursor: pointer;
   > img {
     height: 35px;

@@ -1,46 +1,46 @@
 <template>
-  <div id="app">
-   <app-menu></app-menu>
-   <app-modal v-if="modalOpend"></app-modal>
-   <app-hero ></app-hero>
-   <app-buttons></app-buttons>
-  </div>
+<div id="app">
+    <app-menu></app-menu>
+    <app-modal v-if="modalOpend"></app-modal>
+    <router-view></router-view>
+</div>
 </template>
 
 <script>
 import menu from "./components/shared/menu.vue";
-import hero from "./components/heroesList.vue";
-import buttons from "./components/shared/controllButtons.vue";
-import modal from "./components/shared/HeroInfo";
-
+import modal from "./components/heroes/HeroInfo";
+import table from "./components/table"
 export default {
-  name: "app",
-  data: function() {
-    return {
-      searching: false
-    };
-  },
-  components: {
-    appMenu: menu,
-    appHero: hero,
-    appButtons: buttons,
-    appModal: modal
-  },
-  computed: {
-    modalOpend: function() {
-      return this.$store.getters.modalState;
+    name: "app",
+    data: function () {
+        return {
+            searching: false
+        };
+    },
+    components: {
+        appMenu: menu,
+        appModal: modal,
+        appTable: table
+    },
+    computed: {
+        modalOpend: function () {
+            return this.$store.getters.modalState;
+        }
+    },
+    created(){
+        this.$store.dispatch("tryAutoLogin")
     }
-  }
 };
 </script>
 
 <style lang="scss">
 html,
 body {
-  margin: 0;
+    margin: 0;
 }
+
 div {
-  text-align: center;
-  overscroll-behavior-y: initial;
+    text-align: center;
+    overscroll-behavior-y: initial;
 }
 </style>
