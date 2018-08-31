@@ -18,6 +18,8 @@
 <script>
 export default {
     computed: {
+
+        // Check if logged in
         isSingedIn: function () {
             if (this.$store.getters.getIdToken != null) {
                 return true;
@@ -25,14 +27,11 @@ export default {
                 return false;
             }
         },
+
+        // Get user name
         userName: function () {
             if (this.$store.getters.getUser) {
                 return this.$store.getters.getUser.username;
-            }
-        },
-        userSurname: function () {
-            if (this.$store.getters.getUser) {
-                return this.$store.getters.getUser.surname;
             }
         }
     }

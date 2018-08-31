@@ -51,12 +51,20 @@ export default {
         };
     },
     methods: {
-        uploadPic: function (input) {
+        uploadPic: function(input) {
             input = input.target;
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = e => this.$store.commit("setUserPic", e.target.result);
                 reader.readAsDataURL(input.files[0]);
+            }
+        },
+         mobileFnc: function () {
+            var numb = window.innerWidth;
+            if (numb < 460) {
+                this.mobile = true
+            } else {
+                this.mobile = false
             }
         }
     },
@@ -76,16 +84,7 @@ export default {
             return window.innerWidth;
         }
     },
-    methods: {
-        mobileFnc: function () {
-            var numb = window.innerWidth;
-            if (numb < 460) {
-                this.mobile = true
-            } else {
-                this.mobile = false
-            }
-        }
-    },
+   
     created() {
         window.addEventListener("resize", this.mobileFnc, true);
     },

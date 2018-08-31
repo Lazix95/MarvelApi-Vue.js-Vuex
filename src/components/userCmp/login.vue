@@ -76,6 +76,8 @@ export default {
         };
     },
     methods: {
+
+        // Custom submit form action
         onSubmit() {
             const formData = {
                 email: this.email,
@@ -83,6 +85,8 @@ export default {
             };
             this.$store.dispatch("logIn", formData);
         },
+
+        // Initiate reset password
         resetPassword($event) {
             const resetPasswordData = {
                 requestType: "PASSWORD_RESET",
@@ -91,20 +95,28 @@ export default {
             this.$store.dispatch("resetPassword", resetPasswordData);
         }
     },
-    watch:{
-        foreverLogIn: function(){
+    watch: {
+
+        // Watch for forewer login check
+        foreverLogIn: function () {
             localStorage.setItem("foreverLogin", this.foreverLogIn)
             this.$store.commit("setForeverLogin", this.foreverLogIn)
         }
     },
     computed: {
+
+        // Wrong password inficator
         wrongPassword: function () {
             return this.$store.getters.getWrongPassword
         },
+
+        // Reset password indicator
         resetPasswordRequest: function () {
             return this.$store.getters.getPasswordResetRequest;
         }
     },
+
+    // Vuelidate settings
     validations: {
         email: {
             required,
@@ -132,7 +144,7 @@ export default {
             minLen: minLength(6)
         }
     },
-    created(){
+    created() {
         this.foreverLogIn = localStorage.getItem("foreverLogin")
         this.$store.commit("setForeverLogin", false)
     }
@@ -140,6 +152,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/*
+* Log in page style
+*/
+
 .show-enter-active {
     transition: all 1s 0.4s;
     max-height: 50px;
@@ -207,7 +223,7 @@ export default {
     border: 1px solid #eee;
     padding: 20px;
     box-shadow: 0 2px 3px #ccc;
-    box-shadow: 10px 10px 88px -8px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 88px -8px rgba(0, 0, 0, 0.75);
     border-radius: 15px;
     >form {
         >.input {

@@ -1,79 +1,89 @@
 <template>
-<div><div class="thumbnaill" @mousemove="mouseCrd()">
-    <img :src="src" :class="data.class" @click="$store.commit('setModalData',data)">
-    <div class="bookmark"><img :src="starSrc" @click="$store.dispatch('saveToLocalStorge',data)" @mouseover="activeTooltip(true)" @mouseout="activeTooltip(false)"></div>
-    <p> {{ data.name }}</p>
-</div>
- <app-tooltip v-if="toolTipActive" :x="tooltipX" :y="tooltipY">{{ tooltipStr }}</app-tooltip>
+<div>
+    <div class="thumbnaill" @mousemove="mouseCrd()">
+        <img :src="src" :class="data.class" @click="$store.commit('setModalData',data)">
+        <div class="bookmark"><img :src="starSrc" @click="$store.dispatch('saveToLocalStorge',data)" @mouseover="activeTooltip(true)" @mouseout="activeTooltip(false)"></div>
+        <p> {{ data.name }}</p>
+    </div>
+    <app-tooltip v-if="toolTipActive" :x="tooltipX" :y="tooltipY">{{ tooltipStr }}</app-tooltip>
 </div>
 </template>
 
  <script>
 import tooltip from "./../shared/tooltip.vue";
 export default {
-  data: function() {
-    return {
-      unbookmarked: require("../../assets/img/empty star.png"),
-      bookmarked: require("../../assets/img/full star.png"),
-      toolTipActive: false,
-      bookmarkedString: "Bookmark",
-      unbookmarkedStrung: "Unbookmark",
-      tooltipX: "",
-      tooltipY: ""
-    };
-  },
-  props: {
-    data: Object,
-    arrayOfIds: Array
-  },
-  computed: {
-    url: function() {
-      return this.src.toString();
+    data: function () {
+        return {
+            unbookmarked: require("../../assets/img/empty star.png"),
+            bookmarked: require("../../assets/img/full star.png"),
+            toolTipActive: false,
+            bookmarkedString: "Bookmark",
+            unbookmarkedStrung: "Unbookmark",
+            tooltipX: "",
+            tooltipY: ""
+        };
     },
-    src: function() {
-      return this.data.thumbnail.path + "." + this.data.thumbnail.extension;
+    props: {
+        data: Object,
+        arrayOfIds: Array
     },
-    starSrc: function() {
-      var isBkm = this.arrayOfIds.includes(this.data.id);
-      var starSrc = isBkm ? this.bookmarked : this.unbookmarked;
-      return starSrc;
+    computed: {
+
+        // Compose url to hero picture
+        src: function () {
+            return this.data.thumbnail.path + "." + this.data.thumbnail.extension;
+        },
+
+        // Choose star, full or empty
+        starSrc: function () {
+            var isBkm = this.arrayOfIds.includes(this.data.id);
+            var starSrc = isBkm ? this.bookmarked : this.unbookmarked;
+            return starSrc;
+        },
+
+        // Compose tooltip text
+        tooltipStr: function () {
+            var str = this.bookmarkedString;
+            if (this.arrayOfIds.includes(this.data.id)) {
+                str = this.unbookmarkedStrung;
+            }
+            return str + "\n" + " " + this.data.name.split("(")[0];
+        }
     },
-    tooltipStr: function() {
-      var str = this.bookmarkedString;
-      if (this.arrayOfIds.includes(this.data.id)) {
-        str = this.unbookmarkedStrung;
-      }
-      return str + "\n" + " " + this.data.name.split("(")[0];
+    methods: {
+
+        // Activate tooltip
+        activeTooltip: function (state) {
+            this.toolTipActive = state;
+        },
+
+        // Get mouse coordinates
+        mouseCrd: function () {
+            this.tooltipX = parseInt(event.pageX);
+            this.tooltipY = parseInt(event.pageY);
+        },
+
+        // Set class "imageNotFound" for heroes whitout images
+        setClass: function () {
+            var str = this.src.split("/");
+            if (str[str.length - 1] == "image_not_available.jpg") {
+                this.data.class = "imageNotFound";
+            } else {
+                this.data.class = "";
+            }
+        },
+    },
+    components: {
+        appTooltip: tooltip
+    },
+    created() {
+        this.setClass();
     }
-  },
-  methods: {
-    activeTooltip: function(state) {
-      this.toolTipActive = state;
-    },
-    mouseCrd: function() {
-      this.tooltipX = parseInt(event.pageX);
-      this.tooltipY = parseInt(event.pageY);
-    },
-    setClass: function() {
-      var str = this.src.split("/");
-      if (str[str.length - 1] == "image_not_available.jpg") {
-        this.data.class = "imageNotFound";
-      } else {
-        this.data.class = "";
-      }
-    },
-  },
-  components: {
-    appTooltip: tooltip
-  },
-  created(){
-    this.setClass();
-  }
 };
 </script>
 
  <style lang="less" scoped>
- /*
+/*
  * Variables
  */
 
@@ -82,7 +92,6 @@ export default {
 @thumbnaillBackgroundColor: #7fffd4;
 @heroNamesColor: #000000;
 @backgroundColor: #ffe4c4;
-
 /*
  * Hero Component Style
  */
@@ -120,23 +129,22 @@ export default {
         object-fit: unset;
     }
     >p {
-        transform: translateX(-50%); //translateY(50%);
+        transform: translateX(-50%);
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
         margin: 0;
         padding: 12px 10px;
-        position: absolute; //bottom: -145px;
+        position: absolute;
         left: 50%;
         width: 200px;
         >a {
             color: @heroNamesColor;
-            position: relative; // margin-bottom: 103px;
+            position: relative;
         }
     }
     >.bookmark {
-        position: absolute; //  top: 10px;
-        // right: 10px;
+        position: absolute;
         z-index: 10;
         >img {
             height: 30px;

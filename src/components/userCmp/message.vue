@@ -15,14 +15,6 @@
 </div>
 </template>
 
-<!-- <template>
-<b-container class="messageWindow">
-    <span :class="{'you': !sented, 'sender':sented }">{{ sender }}</span>
-    <p class="col-sm-8 message" :class="{'offset-sm-4': sented}">{{ message }}</p>
-</b-container>
-</template>
-
--->
 
 <script>
 export default {
@@ -33,6 +25,8 @@ export default {
         time: Number
     },
     computed: {
+
+        // Return message sender
         sender: function () {
             if (this.sented) {
                 return "You";
@@ -40,6 +34,8 @@ export default {
                 return this.from;
             }
         },
+
+        // Set time of sented message
         date: function () {
             var d = new Date(this.time)
             var time = d.getDate() + "." + d.getMonth() + "." + d.getFullYear() + "  " + d.getHours() + ":" + d.getMinutes() + " h"
@@ -51,6 +47,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/*
+* Message style
+*/
+
 .messageWindow {
     margin-top: 15px;
     position: relative;

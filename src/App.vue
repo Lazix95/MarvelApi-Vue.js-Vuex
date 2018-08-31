@@ -1,8 +1,8 @@
 <template>
 <div id="app">
-    <app-menu></app-menu>
+    <app-menu></app-menu>  
     <app-modal v-if="modalOpend"></app-modal>
-    <router-view></router-view>
+    <router-view></router-view> 
 </div>
 </template>
 

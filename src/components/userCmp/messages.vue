@@ -31,6 +31,8 @@ export default {
         };
     },
     computed: {
+
+        // Get messages form selected user
         messages: function () {
             if (this.currentSender) {
                 this.$store.dispatch('openThred', this.currentSender)
@@ -41,6 +43,8 @@ export default {
             return this.$store.getters.getMessages;
 
         },
+
+        // Get user names of all senders
         senders: function () {
             var senders = [];
             for (var key in this.messages) {
@@ -48,14 +52,20 @@ export default {
             }
             return senders;
         },
+
+        // Get selected sender
         currentSender: function () {
             return this.$store.getters.getCurrentSender;
         },
+
+        // Get selected threed of messages
         thredOfMessages: function () {
             return this.$store.getters.getThredOfMessages;
         }
     },
     methods: {
+
+        // Send message
         sentMessage: function ($event) {
             var d = new Date();
             var newMessage = {
@@ -70,11 +80,15 @@ export default {
 
             $event.target.message.value = "";
         },
+
+        // Open message threed
         openThred: function (sender) {
             this.checkNew = this.$refs.messageDisplay.childNodes;
             this.$store.dispatch('openThred', sender)
             this.scrollToBottom();
         },
+
+        // Scroll to the bottom of the page
         scrollToBottom: function () {
             var vm = this;
             setTimeout(() => {
@@ -85,13 +99,6 @@ export default {
     },
     created() {
         var d = new Date();
-        //  this.$store.dispatch("postMessage", {
-        //     from: "Niko Bitan",
-        //     to: "Lazix",
-        //     status: "new",
-        //     time: d.getTime(),
-        //     messsage: "Another Test, Another Test"
-        //  });
         this.$store.dispatch("fetchMessages");
         var vm = this;
         this.longPull = setInterval(
@@ -116,6 +123,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/*
+* Messages page style
+*/
+
 .threads {
     border: 1px solid #e7ebea;
     box-sizing: border-box;
@@ -154,7 +165,8 @@ export default {
     display: flex;
     flex-direction: column-reverse;
 }
-.msgContainer{
+
+.msgContainer {
     padding: 0;
 }
 </style>

@@ -18,7 +18,6 @@ export default {
 </script>
 
 <style lang="less">
-
 /*
 * Variables
 */
@@ -35,7 +34,6 @@ export default {
 @hamburger-hover-transition-timing-function: linear;
 @hamburger-hover-use-filter: false;
 @hamburger-hover-filter: opacity(50%);
-
 /*
 * habburger style
 */
